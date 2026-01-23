@@ -1,406 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multiverse Agency | Portals of Talent</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Starfield background */
-        #stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 4s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 80px;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
-            font-size: 4rem;
-            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6)); }
-            50% { filter: drop-shadow(0 0 40px rgba(118, 75, 162, 0.8)); }
-        }
-
-        .subtitle {
-            font-size: 1.4rem;
-            color: #a0aec0;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .description {
-            font-size: 1.2rem;
-            color: #cbd5e0;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Planet/Portal Container */
-        .multiverse-container {
-            position: relative;
-            min-height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 60px;
-            padding: 60px 20px;
-        }
-
-        /* Individual Planet Portal */
-        .planet-portal {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .planet-portal:nth-child(1) { animation-delay: 0s; }
-        .planet-portal:nth-child(2) { animation-delay: 1.5s; }
-        .planet-portal:nth-child(3) { animation-delay: 3s; }
-        .planet-portal:nth-child(4) { animation-delay: 4.5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        .planet-portal:hover {
-            transform: scale(1.15);
-            z-index: 10;
-        }
-
-        /* Planet sphere */
-        .planet {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                inset 0 0 50px rgba(0, 0, 0, 0.5),
-                0 0 80px var(--glow-color);
-            transition: all 0.4s ease;
-        }
-
-        .planet::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .planet-portal:hover .planet {
-            box-shadow: 
-                inset 0 0 50px rgba(0, 0, 0, 0.5),
-                0 0 120px var(--glow-color),
-                0 0 200px var(--glow-color);
-        }
-
-        /* Different planet themes */
-        .planet-portal:nth-child(1) {
-            --glow-color: rgba(255, 215, 0, 0.8);
-        }
-        .planet-portal:nth-child(1) .planet {
-            background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00, #8b4513);
-        }
-
-        .planet-portal:nth-child(2) {
-            --glow-color: rgba(0, 191, 255, 0.8);
-        }
-        .planet-portal:nth-child(2) .planet {
-            background: radial-gradient(circle at 30% 30%, #00bfff, #1e90ff, #000080);
-        }
-
-        .planet-portal:nth-child(3) {
-            --glow-color: rgba(255, 20, 147, 0.8);
-        }
-        .planet-portal:nth-child(3) .planet {
-            background: radial-gradient(circle at 30% 30%, #ff69b4, #ff1493, #8b008b);
-        }
-
-        .planet-portal:nth-child(4) {
-            --glow-color: rgba(50, 205, 50, 0.8);
-        }
-        .planet-portal:nth-child(4) .planet {
-            background: radial-gradient(circle at 30% 30%, #7cfc00, #32cd32, #006400);
-        }
-
-        /* Planet ring/orbit */
-        .orbit-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 280px;
-            height: 280px;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: orbitRotate 30s linear infinite;
-        }
-
-        @keyframes orbitRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Tooltip on hover */
-        .planet-info {
-            position: absolute;
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.85);
-            padding: 15px 25px;
-            border-radius: 15px;
-            border: 2px solid var(--glow-color);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            z-index: 100;
-        }
-
-        .planet-portal:hover .planet-info {
-            opacity: 1;
-            bottom: -100px;
-        }
-
-        .planet-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--glow-color);
-        }
-
-        .planet-role {
-            font-size: 0.9rem;
-            color: #cbd5e0;
-        }
-
-        .planet-quote {
-            font-size: 0.85rem;
-            color: #a0aec0;
-            font-style: italic;
-            margin-top: 5px;
-        }
-
-        /* Planet icon/symbol */
-        .planet-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            z-index: 2;
-            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 100px;
-            padding: 40px;
-            color: #718096;
-            font-size: 0.95rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-tagline {
-            font-size: 1.1rem;
-            color: #a0aec0;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1.1rem;
-            }
-
-            .description {
-                font-size: 1rem;
-            }
-
-            .planet-portal {
-                width: 180px;
-                height: 180px;
-            }
-
-            .planet {
-                width: 180px;
-                height: 180px;
-            }
-
-            .planet-icon {
-                font-size: 3rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiverse Agency</title>
 </head>
 <body>
-    <!-- Starfield -->
-    <div id="stars"></div>
 
-    <div class="container">
-        <header>
-            <h1>🌌 MULTIVERSE AGENCY</h1>
-            <p class="subtitle">Portals of Talent</p>
-            <p class="description">
-                Explore the portals of our worlds. Each developer brings unique power to the multiverse of code. Click any planet to enter their dimension and discover their skills, stories, and contributions to our collective universe.
-            </p>
-        </header>
+  <!-- Agency Header -->
+  <header>
+    <center><h1>🌌 Multiverse Agency</h1></center>
+    <h2>Where universes unite to build software for businesses!</h2>
+  </header>
 
-        <div class="multiverse-container">
-            <!-- Planet 1: Hamza - The Techverse -->
-            <a href="hamza.html" class="planet-portal">
-                <div class="orbit-ring"></div>
-                <div class="planet">
-                    <div class="planet-icon">⚡</div>
-                </div>
-                <div class="planet-info">
-                    <div class="planet-name">The Techverse</div>
-                    <div class="planet-role">Hamza • Code Architect</div>
-                    <div class="planet-quote">"Turning chaos into clean code"</div>
-                </div>
-            </a>
+  <!-- Mission Statement -->
+  <section id="mission">
+    <p>
+      In a multiverse filled with endless possibilities, six student developers have joined forces to create software that transcends dimensions. 
+      From web apps to AI tools, every universe contributes its unique skills.
+    </p>
+  </section>
 
-            <!-- Planet 2: Teammate 1 - The Codeverse -->
-            <a href="teammate1.html" class="planet-portal">
-                <div class="orbit-ring"></div>
-                <div class="planet">
-                    <div class="planet-icon">💻</div>
-                </div>
-                <div class="planet-info">
-                    <div class="planet-name">The Codeverse</div>
-                    <div class="planet-role">[Name] • Developer</div>
-                    <div class="planet-quote">"Crafting elegant solutions"</div>
-                </div>
-            </a>
+  <!-- Developers as Universes -->
+  <section id="universes">
+    <h3>Our Developer Universes</h3>
+    <ul>
+      <li>
+        <strong>Hamza</strong> - <em>Techverse</em>:  
+        The universe where code flows like energy, crafting sleek websites and smart solutions.  
+        (<a href="Hamza.html" target="_blank">Enter Techverse</a>)
+      </li>
+      <li>
+        <strong>Enock</strong> - <em>Blackhole verse</em>:  
+        A realm where every line of code tells a story and apps come to life.  
+        (<a href="Enock.html" target="_blank">Enter Codeverse</a>)
+      </li>
+      <li>
+        <strong>Mitchelle</strong> - <em>Design verse</em>:  
+        A universe that turns challenges into projects, mastering problem-solving across dimensions.  
+        (<a href="mitchelle.html" target="_blank">Enter Devverse</a>)
+      </li>
+      <li>
+        <strong>Emmanuel</strong> - <em>Appverse</em>:  
+        Where apps are born and user experiences are crafted like magic spells.  
+        (<a href="Emmanuel.html" target="_blank">Enter Appverse</a>)
+      </li>
+      <li>
+        <strong>Nuel</strong> - <em>Webverse</em>:  
+        The dimension of creativity, designing interfaces that connect universes.  
+        (<a href="Nuel.html" target="_blank">Enter Webverse</a>)
+      </li>
+      <li>
+        <strong>Alvan</strong> - <em>Softverse</em>:  
+        A universe of logic and precision, turning ideas into fully functional software.  
+        (<a href="Alvan.html" target="_blank">Enter Softverse</a>)
+      </li>
+    </ul>
+  </section>
 
-            <!-- Planet 3: Teammate 2 - The Designverse -->
-            <a href="teammate2.html" class="planet-portal">
-                <div class="orbit-ring"></div>
-                <div class="planet">
-                    <div class="planet-icon">🎨</div>
-                </div>
-                <div class="planet-info">
-                    <div class="planet-name">The Designverse</div>
-                    <div class="planet-role">[Name] • Designer</div>
-                    <div class="planet-quote">"Where aesthetics meet function"</div>
-                </div>
-            </a>
+  <!-- Closing / Portal -->
+  <footer>
+    <p>
+      🌠 Together, we are the Multiverse Agency — six universes, one mission: 
+      crafting software that spans every reality.
+    </p>
+  </footer>
 
-            <!-- Planet 4: Teammate 3 - The Innoverse -->
-            <a href="teammate3.html" class="planet-portal">
-                <div class="orbit-ring"></div>
-                <div class="planet">
-                    <div class="planet-icon">🚀</div>
-                </div>
-                <div class="planet-info">
-                    <div class="planet-name">The Innoverse</div>
-                    <div class="planet-role">[Name] • Innovator</div>
-                    <div class="planet-quote">"Pushing boundaries daily"</div>
-                </div>
-            </a>
-        </div>
-
-        <footer>
-            <p class="footer-tagline">⭐ When Universes Collide, Magic Happens ⭐</p>
-            <p>The Multiverse Agency © 2025 | Built with collaboration across dimensions</p>
-        </footer>
-    </div>
-
-    <script>
-        // Generate starfield
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 4 + 's';
-            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            starsContainer.appendChild(star);
-        }
-    </script>
 </body>
 </html>
